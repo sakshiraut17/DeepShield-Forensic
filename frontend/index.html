@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepShield AI | Advanced Deepfake Detection</title>
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="gradient-bg">
+        <div class="gradient-1"></div>
+        <div class="gradient-2"></div>
+        <div class="gradient-3"></div>
+    </div>
+
+    <!-- Particles Container -->
+    <div id="particles-js"></div>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-wrapper">
+                <div class="logo-glow"></div>
+                <div class="logo">
+                    <i class="fas fa-shield-halos"></i>
+                    <span>DeepShield</span>
+                </div>
+                <p class="logo-tagline">AI Forensics Engine</p>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-mode="image">
+                    <i class="fas fa-camera"></i>
+                    <span>Image Analysis</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-item" data-mode="video">
+                    <i class="fas fa-video"></i>
+                    <span>Video Analysis</span>
+                    <div class="nav-indicator"></div>
+                </button>
+                <button class="nav-item" data-mode="audio">
+                    <i class="fas fa-microphone"></i>
+                    <span>Audio Analysis</span>
+                    <div class="nav-indicator"></div>
+                </button>
+            </nav>
+
+            <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fileInput" hidden>
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <div class="upload-text">
+                            <span class="primary-text">Drop file here</span>
+                            <span class="secondary-text">or click to browse</span>
+                        </div>
+                        <div class="file-info" id="fileInfo"></div>
+                    </div>
+                    <div class="upload-progress" id="uploadProgress">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+                
+                <button class="analyze-btn" id="analyzeBtn" onclick="window.uploadFile()">
+                    <span>Analyze Now</span>
+                    <i class="fas fa-arrow-right"></i>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+
+            <div class="stats-preview">
+                <div class="stat-item">
+                    <span class="stat-value">98.5%</span>
+                    <span class="stat-label">Accuracy</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">1.2s</span>
+                    <span class="stat-label">Avg. Time</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">24/7</span>
+                    <span class="stat-label">Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-title">
+                    <h1>Forensic Analysis <span class="highlight">Dashboard</span></h1>
+                    <p>Real-time deepfake detection with AI-powered insights</p>
+                </div>
+                <div class="header-actions">
+                    <button class="action-btn" id="refreshBtn">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="action-btn" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Deep+Shield&background=6366f1&color=fff&bold=true" alt="User">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Results Grid -->
+            <div class="results-grid">
+                <!-- Main Result Card -->
+                <div class="result-card main-result">
+                    <div class="result-header">
+                        <div class="result-title">
+                            <i class="fas fa-radar"></i>
+                            <h3>Detection Result</h3>
+                        </div>
+                        <span class="result-badge" id="resultBadge">Pending</span>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="result-visual">
+                            <div class="gauge-container">
+                                <svg class="gauge" viewBox="0 0 200 100">
+                                    <path class="gauge-bg" d="M20 80 A80 80 0 0 1 180 80" />
+                                    <path class="gauge-fill" id="gaugeFill" d="M20 80 A80 80 0 0 1 180 80" />
+                                </svg>
+                                <div class="gauge-center">
+                                    <span class="confidence-value" id="confidence">0%</span>
+                                    <span class="confidence-label">Confidence</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="detail-item">
+                                <span class="detail-label">Status</span>
+                                <span class="detail-value" id="status">No Analysis</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Finding</span>
+                                <span class="detail-value" id="desc">Upload media to begin</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="heatmap-preview" id="heatmapPreview" style="display: none;">
+                        <img src="" alt="Heatmap" id="heatmapImage">
+                        <div class="heatmap-overlay">
+                            <i class="fas fa-search-plus"></i> Click to enlarge
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signal Analysis Card -->
+                <div class="result-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Signal Analysis</h3>
+                    </div>
+                    <div class="signal-bars">
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span><i class="fas fa-robot"></i> GAN Artifacts</span>
+                                <span class="signal-percent" id="ganPercent">0%</span>
+                            </div>
+                            <div class="signal-bar-container">
+                                <div class="signal-bar" id="gan" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span><i class="fas fa-tags"></i> Metadata</span>
+                                <span class="signal-percent" id="metaPercent">0%</span>
+                            </div>
+                            <div class="signal-bar-container">
+                                <div class="signal-bar" id="meta" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span><i class="fas fa-compress"></i> Compression</span>
+                                <span class="signal-percent" id="compPercent">0%</span>
+                            </div>
+                            <div class="signal-bar-container">
+                                <div class="signal-bar" id="comp" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="signal-item">
+                            <div class="signal-label">
+                                <span><i class="fas fa-clock"></i> Temporal</span>
+                                <span class="signal-percent" id="tempPercent">0%</span>
+                            </div>
+                            <div class="signal-bar-container">
+                                <div class="signal-bar" id="temp" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Forensic Cards -->
+                <div class="result-card forensic-grid">
+                    <div class="card-header">
+                        <i class="fas fa-microscope"></i>
+                        <h3>Forensic Analysis</h3>
+                    </div>
+                    <div class="forensic-cards">
+                        <div class="forensic-card">
+                            <i class="fas fa-wave-square"></i>
+                            <span>Spectral Analysis</span>
+                            <div class="card-status pending"></div>
+                        </div>
+                        <div class="forensic-card">
+                            <i class="fas fa-tags"></i>
+                            <span>Metadata Check</span>
+                            <div class="card-status pending"></div>
+                        </div>
+                        <div class="forensic-card">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Compression Pattern</span>
+                            <div class="card-status pending"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="result-card activity-log">
+                    <div class="card-header">
+                        <i class="fas fa-history"></i>
+                        <h3>Recent Activity</h3>
+                    </div>
+                    <div class="activity-list" id="activityList">
+                        <!-- Activity items will be added here -->
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title">No recent activity</div>
+                                <div class="activity-time">Upload a file to begin</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heatmap Modal -->
+            <div class="modal" id="heatmapModal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <img src="" alt="Heatmap" id="modalHeatmap">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Analyzing...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
