@@ -1,36 +1,4 @@
-import os
-import json
-import hashlib
-import datetime
-from flask import Flask, request, jsonify, send_file
-from flask_cors import CORS
-from werkzeug.utils import secure_filename
-import numpy as np
-from PIL import Image
-import io
-import base64
-import warnings
-warnings.filterwarnings('ignore')
 
-# Import custom modules
-from models.image_detector import DeepfakeImageDetector
-from models.audio_detector import DeepfakeAudioDetector
-from models.video_detector import DeepfakeVideoDetector
-from models.ensemble_model import EnsembleDetector
-from utils.preprocessor import DataPreprocessor
-from utils.feature_extractor import FeatureExtractor
-from utils.logger import ForensicLogger
-
-# Initialize Flask app
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here-change-in-production'
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500MB max file size
-app.config['ALLOWED_EXTENSIONS'] = {
-    'image': {'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'},
-    'audio': {'mp3', 'wav', 'ogg', 'm4a', 'flac'},
-    'video': {'mp4', 'avi', 'mov', 'mkv', 'webm'}
-}
 
 # Initialize CORS
 CORS(app, resources={r"/*": {"origins": "*"}})
